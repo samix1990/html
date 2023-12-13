@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraping Example</title>
+</head>
+<body>
+
+    <label for="userInput">Enter Data:</label>
+    <input type="text" id="userInput" name="userInput">
+
+    <button id="scrapeButton">Scrape Data</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Assuming you have an input field with the id "userInput"
+            var inputElement = document.getElementById("userInput");
+
+            // Flag to track if scraping is allowed
+            var allowScraping = false;
+
+            // Check if the input element exists
+            if (inputElement) {
+                // Attach an "input" event listener to the input element
+                inputElement.addEventListener("input", function () {
+                    // Get the updated text content of the input element
+                    var userInput = inputElement.value;
+
+                    // Log the updated text content to the console
+                    console.log("User input: " + userInput);
+
+                    // Set the flag to allow scraping only when certain conditions are met
+                    allowScraping = userInput.length > 5;
+                });
+
+                // Assuming you have a button with the id "scrapeButton"
+                var scrapeButton = document.getElementById("scrapeButton");
+
+                // Check if the button element exists
+                if (scrapeButton) {
+                    // Attach a "click" event listener to the button
+                    scrapeButton.addEventListener("click", function () {
+                        // If scraping is allowed, initiate scraping after a timeout (e.g., 2 seconds)
+                        if (allowScraping) {
+                            setTimeout(function () {
+                                // Perform scraping logic here
+                                var scrapedData = inputElement.value;
+                                console.log("Scraped data after button click: " + scrapedData);
+                                // Additional actions or scraping logic can be added here
+                            }, 2000); // 2000 milliseconds = 2 seconds
+                        } else {
+                            console.log("Scraping not allowed due to conditions.");
+                        }
+                    });
+                } else {
+                    console.error("Scrape button element not found.");
+                }
+            } else {
+                console.error("Input element not found.");
+            }
+        });
+    </script>
+
+</body>
+</html>
