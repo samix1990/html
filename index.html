@@ -3,63 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scraping Example</title>
+    <title>User Input and Choice</title>
 </head>
 <body>
 
-    <label for="userInput">Enter Data:</label>
-    <input type="text" id="userInput" name="userInput">
+    <label for="userInput">User Input:</label>
+    <input type="text" id="userInput">
+
+    <br>
+
+    <label for="choiceList">Select a Choice:</label>
+    <select id="choiceList">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <!-- Add more options as needed -->
+    </select>
+
+    <br>
 
     <button id="scrapeButton">Scrape Data</button>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Assuming you have an input field with the id "userInput"
-            var inputElement = document.getElementById("userInput");
+        // Place the JavaScript code here
+        // Assuming you have an input field with the id "userInput"
+        var inputElement = document.getElementById("userInput");
 
-            // Flag to track if scraping is allowed
-            var allowScraping = false;
+        // Assuming you have a select element with the id "choiceList"
+        var choiceList = document.getElementById("choiceList");
 
-            // Check if the input element exists
-            if (inputElement) {
-                // Attach an "input" event listener to the input element
-                inputElement.addEventListener("input", function () {
-                    // Get the updated text content of the input element
-                    var userInput = inputElement.value;
+        // Variables to store user input and selected choice
+        var userInputValue = "";
+        var selectedChoiceValue = "";
 
-                    // Log the updated text content to the console
-                    console.log("User input: " + userInput);
+        // Flag to track if scraping is allowed
+        var allowScraping = false;
 
-                    // Set the flag to allow scraping only when certain conditions are met
-                    allowScraping = userInput.length > 5;
+        // Check if the input and select elements exist
+        if (inputElement && choiceList) {
+            // Attach an "input" event listener to the input element
+            inputElement.addEventListener("input", function () {
+                // Get the updated text content of the input element
+                userInputValue = inputElement.value;
+
+                // Log the updated text content to the console
+                console.log("User input: " + userInputValue);
+
+                // Set the flag to allow scraping only when certain conditions are met
+                allowScraping = userInputValue.length > 5;
+            });
+
+            // Attach a "change" event listener to the choiceList (select element)
+            choiceList.addEventListener("change", function () {
+                // Get the selected option value
+                selectedChoiceValue = choiceList.value;
+
+                // Log the selected option to the console
+                console.log("Selected choice: " + selectedChoiceValue);
+
+                // Set the flag to allow scraping based on the selected option
+                allowScraping = selectedChoiceValue === "desiredOption"; // Replace "desiredOption" with the option you want to trigger scraping for
+            });
+
+            // Assuming you have a button with the id "scrapeButton" on the website
+            var scrapeButton = document.getElementById("scrapeButton");
+
+            // Check if the button element exists
+            if (scrapeButton) {
+                // Attach a "click" event listener to the button
+                scrapeButton.addEventListener("click", function () {
+                    // If scraping is allowed, initiate scraping after a timeout (e.g., 2 seconds)
+                    if (allowScraping) {
+                        setTimeout(function () {
+                            // Perform scraping logic here
+                            var scrapedData = userInputValue;
+                            console.log("Scraped data after button click: " + scrapedData);
+                            // Additional actions or scraping logic can be added here
+
+                            // Set the variable 'scrollLoop' using automaSetVariable
+                            // automaSetVariable('scrollLoop', scrapedData);
+
+                            // Move to the next block using automaNextBlock
+                            // automaNextBlock();
+                        }, 2000); // 2000 milliseconds = 2 seconds
+                    } else {
+                        console.log("Scraping not allowed due to conditions.");
+                    }
                 });
-
-                // Assuming you have a button with the id "scrapeButton"
-                var scrapeButton = document.getElementById("scrapeButton");
-
-                // Check if the button element exists
-                if (scrapeButton) {
-                    // Attach a "click" event listener to the button
-                    scrapeButton.addEventListener("click", function () {
-                        // If scraping is allowed, initiate scraping after a timeout (e.g., 2 seconds)
-                        if (allowScraping) {
-                            setTimeout(function () {
-                                // Perform scraping logic here
-                                var scrapedData = inputElement.value;
-                                console.log("Scraped data after button click: " + scrapedData);
-                                // Additional actions or scraping logic can be added here
-                            }, 2000); // 2000 milliseconds = 2 seconds
-                        } else {
-                            console.log("Scraping not allowed due to conditions.");
-                        }
-                    });
-                } else {
-                    console.error("Scrape button element not found.");
-                }
             } else {
-                console.error("Input element not found.");
+                console.error("Scrape button element not found.");
             }
-        });
+        } else {
+            console.error("Input element or choiceList not found.");
+        }
     </script>
 
 </body>
